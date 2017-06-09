@@ -1,0 +1,6 @@
+{
+  "name": "app deal",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./Deal.js"
+}
