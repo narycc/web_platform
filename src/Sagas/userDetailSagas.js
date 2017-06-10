@@ -172,7 +172,7 @@ export function * getUserLog(api, {payload}) {
   }
 }
 
-export function * showLogErrorRemark(api, {payload}) {
+export function showLogErrorRemark(api, {payload}) {
   bootbox.alert({
     message: '失败原因：' + payload
   })

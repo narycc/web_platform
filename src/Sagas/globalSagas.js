@@ -1,8 +1,8 @@
 /**
- * Created by wenbinzhang on 2017/5/11.
+ * Created by zpp on 2017/06/10.
  */
 import { call, put } from 'redux-saga/effects';
-import { getUserInfoSuccess, logoutSuccess, noLogin } from '../actions/globalActions';
+import { getUserInfoSuccess, logoutSuccess, noLogin } from '../reducers/globalReducer';
 import { hashHistory } from 'react-router';
 
 export function * startUp (api) {

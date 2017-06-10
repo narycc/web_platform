@@ -2,7 +2,7 @@
  * Created by zpp on 2017/06/10.
  */
  
-import { handleActions } from 'redux-actions';
+import { handleActions,createAction } from 'redux-actions';
 import Immutable from 'immutable';
 
 /*

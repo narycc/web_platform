@@ -5,8 +5,8 @@
 import {takeLatest, put} from 'redux-saga/effects';
 import {create} from '../Services/Api';
 
-import {noLogin, START_UP, NO_LOGIN, DO_LOGOUT} from '../actions/globalActions';
-import {LOGIN_REQUEST} from '../constants/loginActionTypes';
+import {noLogin, START_UP, NO_LOGIN, DO_LOGOUT} from '../reducers/globalReducer';
+import {LOGIN_REQUEST} from '../reducers/loginReducer';
 import {
   EMPLOYEE_SEARCH_REQUEST,
   EMPLOYEE_ADD_REQUEST,

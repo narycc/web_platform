@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Todos from '../../../components/Todos/Todos';
+import Todos from '../../components/Todos/Todos';
 
 
 import { 
@@ -24,7 +24,7 @@ class CTodos extends Component {
   }
 
   render () {
-    return <Todo {...this.props}/>;
+    return <Todos {...this.props}/>;
   }
 
 }

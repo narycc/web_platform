@@ -17,13 +17,25 @@ import { DateRangePicker } from 'react-dates';
 import {FormatMoneyByM} from '../../Lib/Helper';
 
 
-const Todo = ({state, onFilterChange, addTodo, onInput, toggleTodo, deleteTodo}) => {
+const Todo = ({
+                state, onFilterChange, addTodo, onInput, toggleTodo, deleteTodo,
+                onSearch, onTypeSearchChange,onMenuClick,onMenuToggleClick,onRefresh,onPage,
+                onRadioStatusChange,onRangeFrom,onRangeTo,
+                onFocusChange,onDatesChange}) => {
+
 
   let todos = state.get('todos');
+
+  let initData = state.get('listData').toJS() || {};
+  let original = state.get('original').toJS() || {};
+  let datePicker = state.get('datePicker').toJS() || {};
+  let statusFormCheckData =state.get('statusFormCheckData');
+  let rangeData = state.get('rangeData');
 
   let todoList = todos.get('todos');
   let selectFilter = todos.get('visibilityFilter');
   let inputValue = todos.get('inputValue');
+
 
   let tableTips = '我是tabletips ,你可以在这这里展示一些关于表的说明';
   return (
@@ -45,7 +57,7 @@ const Todo = ({state, onFilterChange, addTodo, onInput, toggleTodo, deleteTodo})
                 <TypeSearch
                   initData={state.toJS()}
                   onSearch={onSearch}
-                  onChange={onChange}
+                  onChange={onTypeSearchChange}
                   onMenuClick={onMenuClick}
                   onMenuToggleClick={onMenuToggleClick}
                 />
@@ -55,7 +67,7 @@ const Todo = ({state, onFilterChange, addTodo, onInput, toggleTodo, deleteTodo})
               <div className="col-sm-12 col-md-7">
                 <FormCheck
                   state={statusFormCheckData}
-                  onCheckClick={onFundStatusChange}
+                  onCheckClick={onRadioStatusChange}
                 />
               </div>
 
@@ -70,18 +82,18 @@ const Todo = ({state, onFilterChange, addTodo, onInput, toggleTodo, deleteTodo})
                       <input
                         type="text"
                         className="col-md-4"
-                        value={min_amount}
+                        value={rangeData.get('rangeFrom')}
                         onChange={ e => {
-                          onMinAmountChange(e.target.value)
+                          onRangeFrom(e.target.value)
                         }}
                       />
                       <span style={{padding: "7px 20px"}}> -- </span>
                       <input
                         type="text"
                         className="col-md-4"
-                        value={max_amount}
+                        value={rangeData.get('rangeTo')}
                         onChange={ e => {
-                          onMaxAmountChange(e.target.value)
+                          onRangeTo(e.target.value)
                         }}
                       />
 

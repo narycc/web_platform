@@ -2,7 +2,7 @@
  * Created by zpp on 2017/06/10.
  */
 import React from 'react';
-import {VisibilityFilters} from '../../constants/todoActionTypes';
+import {VisibilityFilters} from '../../reducers/todoReducer';
 
 const TodoFilter = ({selectFilter, onFilterChange}) => {
   return (

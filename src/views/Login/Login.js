@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mobileChange, pwdChange, loginRequest, errorMessage } from '../../actions/loginActions';
+import { mobileChange, pwdChange, loginRequest, errorMessage } from '../../reducers/loginReducer';
 import Login from '../../components/Login';
 
 export default connect(

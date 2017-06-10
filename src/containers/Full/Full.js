@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startUp, doLogout } from '../../actions/globalActions';
+import { startUp, doLogout } from '../../reducers/globalReducer';
 
 import Header from '../../components/Header/';
 import Sidebar from '../../components/Sidebar/';

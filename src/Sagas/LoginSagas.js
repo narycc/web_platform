@@ -1,9 +1,9 @@
 /**
- * Created by wenbinzhang on 2017/5/10.
+ * Created by zpp on 2017/06/10.
  */
 
 import { put, call } from 'redux-saga/effects';
-import { errorMessage, loginSuccess } from '../actions/loginActions';
+import { errorMessage, loginSuccess } from '../reducers/loginReducer';
 import { hashHistory } from 'react-router';
 
 export function * login (api, {payload}) {

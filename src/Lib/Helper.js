@@ -1,17 +1,17 @@
 
 function formateMoney (money, fixed, len) {
-  var n = parseInt(fixed) || 2,
-    len = parseInt(len) || 3,
-    money = parseFloat((money + '').replace(/[^\d\.-]/g, '')).toFixed(n) + '',
-    l = money.split('.')[0].split('').reverse(),
+  var n = parseInt(fixed) || 2;
+    len = parseInt(len) || 3;
+    money = parseFloat((money + '').replace(/[^\d\.-]/g, '')).toFixed(n) + '';
+  var l = money.split('.')[0].split('').reverse(),
     r = money.split('.')[1],
     t = '';
 
   for (let i = 0; i < l.length; i++) {
-    t += l[i] + ((i + 1) % len == 0 && (i + 1) != l.length ? ',' : '');
+    t += l[i] + ((i + 1) % len === 0 && (i + 1) !== l.length ? ',' : '');
   }
 
-  if (fixed == 0) {
+  if (fixed === 0) {
     return t.split('').reverse().join('');
   } else {
     return t.split('').reverse().join('') + '.' + r;
@@ -23,7 +23,7 @@ export const TimeStrGetDate = function (str) {
 };
 
 export const FormatMoneyByM = function (money, fixed, len){
-  var money = parseInt(money) || 0;
+  money = parseInt(money) || 0;
   return formateMoney(parseFloat(money / 100).toFixed(2), fixed, len);
 };
 
@@ -35,12 +35,12 @@ function formateTimeObject(time) {
     return num;
   }
 
-  if (typeof time != 'object') {
+  if (typeof time !== 'object') {
     time = '' + time;
     if (time.length > 12) {
-      time = new Date(parseInt(time));
+      time = (new Date(parseInt(time)));
     } else {
-      time = new Date(parseInt(time) * 1000);
+      time = (new Date(parseInt(time) * 1000));
     }
   }
 
@@ -63,8 +63,8 @@ function formateTimeObject(time) {
 
 export const FormateTime = function (time) {
 
-  let obj = formateTimeObject(time);
-  return obj.year + "-" + obj.month + "-" + obj.date + " " + obj.hours + ":" + obj.minutes + ":" + obj.seconds;
+  let obj = formateTimeObject(time) || {};
+  return (obj.year + "-" + obj.month + "-" + obj.date + " " + obj.hours + ":" + obj.minutes + ":" + obj.seconds);
 
 };
 

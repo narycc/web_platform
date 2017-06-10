@@ -1,5 +1,5 @@
 /**
- * Created by zhongpingping on 2017/6/2.
+ * Created by zpp on 2017/6/2.
  */
 
 import { handleActions, createAction } from 'redux-actions';
