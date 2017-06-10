@@ -1,9 +1,9 @@
 /**
- * Created by wenbinzhang on 2017/5/8.
+ * Created by zpp on 2017/06/10.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VisibilityFilters } from '../../constants/todoActionTypes';
+import { VisibilityFilters } from '../../reducers/todoReducer';
 
 const TodoList = ({selectFilter, deleteTodo, toggleTodo, todoList}) => {
   return (

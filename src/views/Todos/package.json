@@ -1,6 +1,6 @@
 {
-  "name": "Login",
+  "name": "Todos",
   "version": "0.0.0",
   "private": true,
-  "main": "./Todo.js"
+  "main": "./Todos.js"
 }

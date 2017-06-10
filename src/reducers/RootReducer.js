@@ -17,7 +17,7 @@ import addPlanReducer from './planAddReducer';
 import editPlanReducer from './planEditReducer';
 
 const rootReducer = combineReducers({
-  todoData: todoReducer,
+  todos: todoReducer,
   loginData: loginReducer,
   userInfo: globalReducer,
   employee: employeeReducer,

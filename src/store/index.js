@@ -1,5 +1,5 @@
 /**
- * Created by wenbinzhang on 2017/5/4.
+ * Created by zpp on 2017/06/10.
  */
 
 export {default} from './configureStore';

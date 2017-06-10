@@ -5,6 +5,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import Full from './containers/Full/'
 import Simple from './containers/Simple/'
 
+import Todos from './views/Todos';
 import Login from './views/Login'
 import AppUser from './views/App/User'
 import Employee from './views/Company/Employee'
@@ -20,7 +21,8 @@ import EditPlan from './views/Plans/Edit';
 export default (
   <Router history={hashHistory}>
     <Route path="/" name="Root" component={Full}>
-      <IndexRoute component={AppUser}/>
+      <IndexRoute component={Todos}/>
+      
       <Route path="app/" name="App">
         <IndexRoute component={AppUser}/>
         <Route path='user' name="AppUser" component={AppUser}/>

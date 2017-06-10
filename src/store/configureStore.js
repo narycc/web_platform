@@ -1,5 +1,5 @@
 /**
- * Created by wenbinzhang on 2017/5/4.
+ * Created by zpp on 2017/06/01.
  */
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';

@@ -1,5 +1,5 @@
 /**
- * Created by wenbinzhang on 2017/5/22.
+ * Created by zpp on 2017/06/10.
  */
 import React from 'react';
 import { TimeStrGetDate } from '../../../Lib/Helper';

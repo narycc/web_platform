@@ -1,15 +1,33 @@
 /**
  * Created by wenbinzhang on 2017/5/4.
  */
-import { handleActions } from 'redux-actions';
-import { TodoState } from '../constants/todoModels';
-import {
-  ADD_TODO,
-  TOGGLE_TODO,
-  SET_VISIBILITY_FILTER,
-  ADD_TODO_INPUT,
-  DELETE_TODO
-} from '../constants/todoActionTypes';
+import { handleActions,createAction } from 'redux-actions';
+import Immutable from 'immutable';
+
+
+
+export const ADD_TODO = 'ADD_TODO';
+export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const ADD_TODO_INPUT = 'ADD_TODO_INPUT';
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+export const DELETE_TODO = 'DELETE_TODO';
+export const VisibilityFilters = {
+  SHOW_ALL: 'SHOW_ALL',
+  SHOW_COMPLETED: 'SHOW_COMPLETED',
+  SHOW_ACTIVE: 'SHOW_ACTIVE'
+};
+
+export const addTodo = createAction(ADD_TODO);
+export const toggleTodo = createAction(TOGGLE_TODO);
+export const setVisibilityFilter = createAction(SET_VISIBILITY_FILTER);
+export const addTodoInput = createAction(ADD_TODO_INPUT);
+export const deleteTodo = createAction(DELETE_TODO);
+
+export const TodoState = Immutable.fromJS({
+  todos: [],
+  visibilityFilter: VisibilityFilters.SHOW_ALL,
+  inputValue: ''
+});
 
 const todoReducer = handleActions({
   [ADD_TODO]: (state, {payload}) => {
