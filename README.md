@@ -1,91 +1,92 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+这个项目是基于[Create React App](https://github.com/facebookincubator/create-react-app)建立的。
 
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+下面是一些如何执行公共任务的内容。
+[这里](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) 可以找到这份指南的最新版本。
 
-## Table of Contents
 
-- [Updating to New Releases](#updating-to-new-releases)
-- [Sending Feedback](#sending-feedback)
-- [Folder Structure](#folder-structure)
-- [Available Scripts](#available-scripts)
+## 内容列表
+
+- [版本更新](#updating-to-new-releases)
+- [反馈](#sending-feedback)
+- [文件夹结构](#folder-structure)
+- [可用脚本](#available-scripts)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
-- [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
-- [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
-- [Installing a Dependency](#installing-a-dependency)
-- [Importing a Component](#importing-a-component)
-- [Adding a Stylesheet](#adding-a-stylesheet)
-- [Post-Processing CSS](#post-processing-css)
-- [Adding Images and Fonts](#adding-images-and-fonts)
-- [Using the `public` Folder](#using-the-public-folder)
-- [Using Global Variables](#using-global-variables)
-- [Adding Bootstrap](#adding-bootstrap)
-- [Adding Flow](#adding-flow)
-- [Adding Custom Environment Variables](#adding-custom-environment-variables)
-- [Can I Use Decorators?](#can-i-use-decorators)
-- [Integrating with a Node Backend](#integrating-with-a-node-backend)
-- [Proxying API Requests in Development](#proxying-api-requests-in-development)
-- [Using HTTPS in Development](#using-https-in-development)
-- [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
-- [Running Tests](#running-tests)
-  - [Filename Conventions](#filename-conventions)
-  - [Command Line Interface](#command-line-interface)
-  - [Version Control Integration](#version-control-integration)
-  - [Writing Tests](#writing-tests)
-  - [Testing Components](#testing-components)
-  - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
-  - [Initializing Test Environment](#initializing-test-environment)
+- [编辑器中的语法高亮](#syntax-highlighting-in-the-editor)
+- [编辑器中展示的Lint 输出](#displaying-lint-output-in-the-editor)
+- [依赖安装](#installing-a-dependency)
+- [引入组件](#importing-a-component)
+- [添加样式](#adding-a-stylesheet)
+- [后处理CSS](#post-processing-css)
+- [添加图片和字体](#adding-images-and-fonts)
+- [public 文件夹的使用](#using-the-public-folder)
+- [全局变量的使用](#using-global-variables)
+- [添加Bootstrap](#adding-bootstrap)
+- [Adding Flow 添加Flow](#adding-flow)
+- [添加自定义环境变量](#adding-custom-environment-variables)
+- [我可以使用装饰符吗？](#can-i-use-decorators)
+- [与Node后台交互](#integrating-with-a-node-backend)
+- [开发环境中API请求代理](#proxying-api-requests-in-development)
+- [开发环境中使用https](#using-https-in-development)
+- [在服务器端自动生成动态meta 标签](#generating-dynamic-meta-tags-on-the-server)
+- [运行测试](#running-tests)
+  - [文件名规则](#filename-conventions)
+  - [命令行交互](#command-line-interface)
+  - [版本控制集成](#version-control-integration)
+  - [编写测试](#writing-tests)
+  - [测试组件](#testing-components)
+  - [使用第三方断言库](#using-third-party-assertion-libraries)
+  - [初始化测试环境](#initializing-test-environment)
   - [Focusing and Excluding Tests](#focusing-and-excluding-tests)
-  - [Coverage Reporting](#coverage-reporting)
-  - [Continuous Integration](#continuous-integration)
-  - [Disabling jsdom](#disabling-jsdom)
-  - [Experimental Snapshot Testing](#experimental-snapshot-testing)
-  - [Editor Integration](#editor-integration)
-- [Developing Components in Isolation](#developing-components-in-isolation)
-- [Making a Progressive Web App](#making-a-progressive-web-app)
-- [Deployment](#deployment)
+  - [覆盖率报告](#coverage-reporting)
+  - [持续集成](#continuous-integration)
+  - [禁用jsdom](#disabling-jsdom)
+  - [Experimental Snapshot Testing ](#experimental-snapshot-testing)
+  - [编辑器集成](#editor-integration)
+- [开发独立组件](#developing-components-in-isolation)
+- [开发一个PWA](#making-a-progressive-web-app)
+- [发布](#deployment)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
-  - [Building for Relative Paths](#building-for-relative-paths)
+  - [Building for Relative Paths相对路径编译](#building-for-relative-paths)
   - [Firebase](#firebase)
-  - [GitHub Pages](#github-pages)
+  - [GitHub 页面](#github-pages)
   - [Heroku](#heroku)
   - [Modulus](#modulus)
   - [Netlify](#netlify)
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
-- [Troubleshooting](#troubleshooting)
-  - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
-  - [`npm run build` silently fails](#npm-run-build-silently-fails)
-- [Something Missing?](#something-missing)
+- [问题解决](#troubleshooting)
+  - [`npm test` 在macOS Sierra hang 住](#npm-test-hangs-on-macos-sierra)
+  - [`npm run build` 失败](#npm-run-build-silently-fails)
+- [还缺什么呢？](#something-missing)
 
-## Updating to New Releases
+## 版本更新
 
-Create React App is divided into two packages:
+Create React App 被分成了两个包：
 
-* `create-react-app` is a global command-line utility that you use to create new projects.
-* `react-scripts` is a development dependency in the generated projects (including this one).
+* `create-react-app` 是一个用来新建项目的全局命令行工具。
+* `react-scripts` 是被生成的项目中的一个开发依赖。 
 
-You almost never need to update `create-react-app` itself: it delegates all the setup to `react-scripts`.
+你几乎不用去更新create-react-app本身，它将所有的设置都代理给react-scripts 了。
 
-When you run `create-react-app`, it always creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
+每次运行create-react-app的时候，它都会使用最新版本的react-scripts,这样你就能在新项目中自动获得所有的新特性和优化。
 
-To update an existing project to a new version of `react-scripts`, [open the changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md), find the version you’re currently on (check `package.json` in this folder if you’re not sure), and apply the migration instructions for the newer versions.
+要将当前项目更新为新版本的react-scripts, [打开更改日志](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md), 找到你当前的版本，然后执行升级命令。
 
-In most cases bumping the `react-scripts` version in `package.json` and running `npm install` in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md) for potential breaking changes.
+通常修改package.json中 react-scripts的本版号，然后执行npm install 就够了，但是最好还是先看下一下修改日志，以防重大改变引发问题。
 
-We commit to keeping the breaking changes minimal so you can upgrade `react-scripts` painlessly.
+我们尽量将重大改变细化，使用户能无感的更新react-scripts.
 
-## Sending Feedback
+## 反馈
 
-We are always open to [your feedback](https://github.com/facebookincubator/create-react-app/issues).
+欢迎及时将问题反馈给我们[反馈](https://github.com/facebookincubator/create-react-app/issues)。
 
-## Folder Structure
+## 文件结构
 
-After creation, your project should look like this:
+创建成功之后，你的文件结构看起来像这样：
 
 ```
 my-app/
@@ -104,80 +105,72 @@ my-app/
     logo.svg
 ```
 
-For the project to build, **these files must exist with exact filenames**:
 
-* `public/index.html` is the page template;
-* `src/index.js` is the JavaScript entry point.
+项目要编译成功，**这些文件的文件名必须正确**：
 
-You can delete or rename the other files.
+* `public/index.html` 是页面模板；
+* `src/index.js` 是Javascript 的入口文件。
 
-You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.<br>
-You need to **put any JS and CSS files inside `src`**, or Webpack won’t see them.
+其他文件你都可以删除或者重命名。
 
-Only files inside `public` can be used from `public/index.html`.<br>
-Read instructions below for using assets from JavaScript and HTML.
+你可能会在src下面新建子目录。为了快速编译，只有src下面的文件会被webpack处理。
+你需要将相关的JS 和CSS文件都放在src 里面，否则webpack会无视它们。
 
-You can, however, create more top-level directories.<br>
-They will not be included in the production build so you can use them for things like documentation.
+只有public文件夹下面的文件能在public/index.html中使用。Javascript 和HTML的使用，阅读下面的介绍。
 
-## Available Scripts
+但是，你也可以创建一些高层的目录。它们不会被包含到生产编译中，所以你可以用这些目录来放置一些类似文档的东西。
 
-In the project directory, you can run:
+## 可用脚本
+
+在项目文件夹下，可以执行：
 
 ### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+在开发环境下运行App。在浏览器中打开[http://localhost:3000](http://localhost:3000) 可预览。
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+每次编辑的时候，这个页面会重新加载。lint 错误会在控制台中打印出来。
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](#running-tests) for more information.
+在watch 模式下启动测试运行。更多详情，参考[运行测试](#running-tests)
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+将线上版本app编译到build 文件夹下面。它在生产环境模式下面正确绑定React 并且将性能最优化。
+编译之后文件是最小化了，文件名包含hash值。你的app就可以发布了。
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](#deployment) for more information.
+更多关于发布的信息，参考[发布](#deployment)。
 
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**注意：这是一个单向的操作。一旦你执行eject 那就不能回退了**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+如果你对编译工具和配置设置不满意，你任何时候都可以eject。这个命令会把你编译依赖从你的项目移除。
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+取而代之的是，它会把所有的配置文件和过渡依赖（webpack,babel,ESLint等）拷贝到你的项目中，这样就能完全控制它们。除了eject之外其他所有的命令都仍能工作，但是它们都指向这些拷贝过来的脚本，你可以调整它们。这时，你就只能靠你自己了。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+你不一定非得用eject。这些精细的特性设置适合中小型发布，而且你没有义务一定要使用这个特性。但是我们明白如果要使用这个特性的时候，你不能自定义它就不会好用。
 
-## Syntax Highlighting in the Editor
+## 编辑器的语法高亮
 
-To configure the syntax highlighting in your favorite text editor, head to the [Babel's docs](https://babeljs.io/docs/editors) and follow the instructions. Some of the most popular editors are covered.
+配置你最喜欢的文本编辑器的语法高亮，前往[Babel文档](https://babeljs.io/docs/editors)并按照指引配置。文章覆盖了绝大部分主流编辑器。
+## 在编辑器中展示Lint 输出
 
-## Displaying Lint Output in the Editor
+>注意：这个特性在react-scripts@0.2.0或者更高版本中支持。
 
->Note: this feature is available with `react-scripts@0.2.0` and higher.
+一些编辑器，包括Sublime Text, Atom 和Visual Studio Code, 提供了ESLint 的插件。
 
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+这些插件不是lint必须的。你应该在终端或者浏览器控制台查看lint输出。但，如果你更希望在编辑器中就展示lint 的结果，那你需要做一些额外的操作。
 
-They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
+你首先需要为你的编辑器安装ESLint 插件。
 
-You would need to install an ESLint plugin for your editor first.
+>**Atom `linter-eslint` 用户的提示**
 
->**A note for Atom `linter-eslint` users**
-
->If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
+>如果你正在使用Atom 的linter-eslint 插件，要确保**使用全局ESLint 安装**选线被选中。
 
 ><img src="http://i.imgur.com/yVNNHJM.png" width="300">
 
-Then add this block to the `package.json` file of your project:
+然后将下面的代码块添加到项目的package.json 文件中：
 
 ```js
 {
@@ -188,28 +181,27 @@ Then add this block to the `package.json` file of your project:
 }
 ```
 
-Finally, you will need to install some packages *globally*:
+最后，你需要安装一些全局的包：
 
 ```sh
 npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@2.2.3 eslint-plugin-flowtype@2.21.0
 ```
 
-We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+我们承认这种方式并不是最优的，但是由于我们隐藏ESLint 依赖的方式，安装全局包确实是必要的。ESLint团队已经在[努力解决](https://github.com/eslint/eslint/issues/3458),未来几个月后，可能就没有必要了。
 
-## Installing a Dependency
+## 依赖安装
 
-The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
+生成的项目依赖了React和ReactDOM，它也包含了一系列被Create React APP 开发使用的依赖。你可能也会使用npm 安装其他依赖，比如React Router：
 
 ```
 npm install --save <library-name>
 ```
 
-## Importing a Component
+## 引入组件
 
-This project setup supports ES6 modules thanks to Babel.<br>
-While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
+由于Babel,项目支持ES6 模块。我们仍然可以使用require() 和module.exports, 鼓励使用[`import` 和 `export`](http://exploringjs.com/es6/ch_modules.html) 
 
-For example:
+例如：
 
 ### `Button.js`
 
@@ -222,7 +214,7 @@ class Button extends Component {
   }
 }
 
-export default Button; // Don’t forget to use export default!
+export default Button; // 不要忘记使用 export default!
 ```
 
 ### `DangerButton.js`
@@ -230,7 +222,7 @@ export default Button; // Don’t forget to use export default!
 
 ```js
 import React, { Component } from 'react';
-import Button from './Button'; // Import a component from another file
+import Button from './Button'; // 丛另一个文件中引入组件
 
 class DangerButton extends Component {
   render() {
@@ -241,21 +233,19 @@ class DangerButton extends Component {
 export default DangerButton;
 ```
 
-Be aware of the [difference between default and named exports](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281). It is a common source of mistakes.
+注意[default 和命名的export的区别](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)。错误通常根源于此。建议当一个模块只export 一个内容的时候（比如一个组件），使用default import和export。这样能保证`export default Button` 和 `import Button from './Button'` 是同样的内容。
 
-We suggest that you stick to using default imports and exports when a module only exports a single thing (for example, a component). That’s what you get when you use `export default Button` and `import Button from './Button'`.
+命名的export 在到处多个方法模块的时候有用。一个模块可能最多一个default export 和任意多个命名export。
 
-Named exports are useful for utility modules that export several functions. A module may have at most one default export and as many named exports as you like.
+了解更多ES6 模块化知识：
 
-Learn more about ES6 modules:
+* [何时使用花括号?](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)
+* [探索ES6模块化](http://exploringjs.com/es6/ch_modules.html)
+* [理解ES6模块化](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
-* [When to use the curly braces?](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)
-* [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
-* [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
+## 添加样式
 
-## Adding a Stylesheet
-
-This project setup uses [Webpack](https://webpack.github.io/) for handling all assets. Webpack offers a custom way of “extending” the concept of `import` beyond JavaScript. To express that a JavaScript file depends on a CSS file, you need to **import the CSS from the JavaScript file**:
+项目设置使用[Webpack](https://webpack.github.io/)处理所有的资源。webpack 提供了一种自定义的方式扩展JavaScript 的import 概念。为了表示一个Javascript 文件依赖一个css文件，你需要**在Javascript文件中引入CSS**
 
 ### `Button.css`
 
@@ -269,27 +259,27 @@ This project setup uses [Webpack](https://webpack.github.io/) for handling all a
 
 ```js
 import React, { Component } from 'react';
-import './Button.css'; // Tell Webpack that Button.js uses these styles
+import './Button.css'; // 告诉webpack, Button.js文件使用了这些样式。
 
 class Button extends Component {
   render() {
-    // You can use them as regular CSS styles
+    // 你可以把它们当正常的css 样式一样使用
     return <div className="Button" />;
   }
 }
 ```
 
-**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
+**React并不需要这样** 但很多小伙伴发现这个特性非常方便。 你可以阅读关于这种方式的好处[这里](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b)。然而，如果要使用webpack之外的其他编译工具和环境的时候，这样会让你的代码可移植性更差。 
 
-In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
+在开发环境中，按这种依赖方式我们编辑的样式会立即重载显示。在生产环境，所有的css文件会被集中放到编译输出的一个最小化了的.css 文件中。
 
-If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
+如果你关注这种webpack语法的使用方式，你可以把所有的css 都放到src/index.css 文件中。它将会在src/index.js文件中引用。 但是如果你以后要移植到别的编译工具中，可以直接把这个import删除就好了。
 
-## Post-Processing CSS
+## 后处理 CSS
 
-This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
+这个项目设置最小化了css，并且通过[Autoprefixer](https://github.com/postcss/autoprefixer)自动给它们加上了兼容性前缀，因为你不用担心。
 
-For example, this:
+例如这个：
 
 ```css
 .App {
@@ -299,7 +289,7 @@ For example, this:
 }
 ```
 
-becomes this:
+变成了这样：
 
 ```css
 .App {
@@ -316,33 +306,32 @@ becomes this:
 }
 ```
 
-There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
+当前不支持如Less 等预处理工具或者跨css文件的共享变量。
 
-## Adding Images and Fonts
+## 添加图像和字体
 
-With Webpack, using static assets like images and fonts works similarly to CSS.
+使用webpack时，静态资源如图片和字体文件的使用方式和css 类似。
 
-You can **`import` an image right in a JavaScript module**. This tells Webpack to include that image in the bundle. Unlike CSS imports, importing an image or a font gives you a string value. This value is the final image path you can reference in your code.
+你可以在一个Javascript 模块中引入一张图片。这就相当于告诉webpack 将这张图片包含在bundle 中。与css引入不一样的是，引入一张图片或者一个字体返回一个字符串，这个字符串是你代码中可以使用的最终的图片路径。
 
-Here is an example:
-
+例子如下：
 ```js
 import React from 'react';
-import logo from './logo.png'; // Tell Webpack this JS file uses this image
+import logo from './logo.png'; // 告诉webpack这个js 文件爱你使用这张图片
 
 console.log(logo); // /logo.84287d09.png
 
 function Header() {
-  // Import result is the URL of your image
+  // 引入的结果是这张图片的url
   return <img src={logo} alt="Logo" />;
 }
 
 export default Header;
 ```
 
-This ensures that when the project is built, Webpack will correctly move the images into the build folder, and provide us with correct paths.
+这样能够保证当你编译项目的时候，webpack能够正确的把这些图片挪到build 文件夹下面，并且提供正确的路径。
 
-This works in CSS too:
+CSS中也生效：
 
 ```css
 .Logo {
@@ -350,22 +339,21 @@ This works in CSS too:
 }
 ```
 
-Webpack finds all relative module references in CSS (they start with `./`) and replaces them with the final paths from the compiled bundle. If you make a typo or accidentally delete an important file, you will see a compilation error, just like when you import a non-existent JavaScript module. The final filenames in the compiled bundle are generated by Webpack from content hashes. If the file content changes in the future, Webpack will give it a different name in production so you don’t need to worry about long-term caching of assets.
+webpack 会查找css中所有的相对模块引用（它们欧式以“./”开头），然后在编译的时候全部替换成最终路径。如果你不小心输入错误或者删除了一个重要的文件，会出现编译错误，就像你引入了一个不存在Javascript 模块。编译bundle中的这个最终路径是webpack 根据内容hash 产生的。如果未来文件内容发生变化，webpack 在生产环境中会提供不一样的名字，所以你不用担心静态资源缓存的问题。
 
-Please be advised that this is also a custom feature of Webpack.
+请注意这也是webpack 自定义的一个特性。
 
-**It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
-An alternative way of handling static assets is described in the next section.
+**React并不需要它**但是很多人爱它，（react native 的图片机制类似）。另外一种处理静态资源的方式会在下一章节中描述。
 
-## Using the `public` Folder
+## `public` 文件夹的使用
 
->Note: this feature is available with `react-scripts@0.5.0` and higher.
+>注意：这个特性在`react-scripts@0.5.0` 及更高的版本中可用。
 
-Normally we encourage you to `import` assets in JavaScript files as described above. This mechanism provides a number of benefits:
+如上所述，通常鼓励在Javascript 中import静态资源 。这种机制有很多好处：
 
-* Scripts and stylesheets get minified and bundled together to avoid extra network requests.
-* Missing files cause compilation errors instead of 404 errors for your users.
-* Result filenames include content hashes so you don’t need to worry about browsers caching their old versions.
+* 脚本和样式都被最小化和组织到一起，避免了额外的网络开销。
+* 文件缺失引起编译错误，而不是把404错误推向用户。
+* 文件名包含内容hash值，所以不用担心老版本的浏览器缓存问题。
 
 However there is an **escape hatch** that you can use to add an asset outside of the module system.
 
@@ -385,10 +373,9 @@ In JavaScript code, you can use `process.env.PUBLIC_URL` for similar purposes:
 
 ```js
 render() {
-  // Note: this is an escape hatch and should be used sparingly!
-  // Normally we recommend using `import` for getting asset URLs
-  // as described in “Adding Images and Fonts” above this section.
-  return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />;
+  // 注意这是一个应急出口，谨慎使用 
+  // 如上文“添加图片和字体”所述的， 通常推荐使用import 静态资源url 
+  return (<img src=`{process.env.PUBLIC_URL + '/img/logo.png'}`/>);
 }
 ```
 
