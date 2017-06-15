@@ -42,7 +42,7 @@ export const TodoState = Immutable.fromJS({
         type: 2
       },
       {
-        name: '身份证',
+        name: '收入',
         type: 1
       }
     ],
@@ -119,7 +119,7 @@ export const TodoState = Immutable.fromJS({
 
   // 表展示的列表
   listData: {
-    head: ['编号', '姓名', '手机号', '备注', '操作'],
+    head: ['编号', '姓名', '手机号', '收入', '操作'],
     empty: {
       title: '无数据',
       message: '数据列表为空'

@@ -1,7 +1,7 @@
 /**
  * Created by zpp on 2017/5/4.
  */
-import { combineReducers } from 'redux-immutable';
+import {combineReducers} from 'redux-immutable';
 import todoReducer from './todoReducer';
 import loginReducer from './loginReducer';
 import globalReducer from './globalReducer';
@@ -17,18 +17,18 @@ import addPlanReducer from './planAddReducer';
 import editPlanReducer from './planEditReducer';
 
 const rootReducer = combineReducers({
-  todos: todoReducer,
+  todoState: todoReducer,
   loginData: loginReducer,
   userInfo: globalReducer,
   employee: employeeReducer,
   appUserData: userReducer,
   userDetail: userDetailReducer,
-  investments : investmentsReducer,
-  investmentsDetail : investmentsDetailReducer,
-  funds : fundsReducer,
+  investments: investmentsReducer,
+  investmentsDetail: investmentsDetailReducer,
+  funds: fundsReducer,
   onlinePlans: onlinePlansReducer,
-  pendingPlans : pendingPlansReducer,
-  addPlan : addPlanReducer,
+  pendingPlans: pendingPlansReducer,
+  addPlan: addPlanReducer,
   editPlan: editPlanReducer
 });
 

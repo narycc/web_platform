@@ -31,23 +31,13 @@ class CTodos extends Component {
 
 export default connect(
   (state) => ({
-    todos: state.get('todos')
+    state: state.get('todoState')
   }),
-  (dispatch) => ({
-    onFilterChange: (filter) => {
-      dispatch(setVisibilityFilter({filter: filter}))
-    },
-    addTodo: (todo) => {
-      dispatch(addTodo(todo));
-    },
-    onInput: (text) => {
-      dispatch(addTodoInput(text));
-    },
-    toggleTodo: (id) => {
-      dispatch(toggleTodo(id));
-    },
-    deleteTodo: (id) => {
-      dispatch(deleteTodo(id));
-    }
-  })
+  (dispatch) => bindActionCreators({
+    onFilterChange: setVisibilityFilter,
+    addTodo: addTodo,
+    onInput: addTodoInput,
+    toggleTodo: toggleTodo,
+    deleteTodo: deleteTodo
+  },dispatch)
 )(CTodos);

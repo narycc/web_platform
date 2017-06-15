@@ -36,6 +36,35 @@ const Todo = ({
   let selectFilter = todos.get('visibilityFilter');
   let inputValue = todos.get('inputValue');
 
+  let data = original.data || {};
+  initData['rows'] = (data.list && data.list.map(item => {
+
+      let detail_url = "/todo/detail/" + item['id'];
+      return [
+        item['id'],
+        item['name'],
+        item['mobile'],
+        FormatMoneyByM(item['salary']),
+        (<div>
+          <Link className="btn btn-link btn-xs" to={detail_url}>
+            查看
+          </Link>
+          |
+          <button className="btn btn-xs"> 删除 </button>
+        </div>)
+
+      ]
+    })) || [];
+
+  if (initData.rows && initData.rows.length === 0 && original && original.param) {
+    initData.empty.message = '已上线理财计划列表为空，参数：' + JSON.stringify(original.param);
+  }
+
+  let tableTips = '';
+  if (data && data.total >= 0) {
+    tableTips = '总计 ' + data.total + ' 条数据，共 ' + data.totalPage + ' 页';
+  }
+
 
   let tableTips = '我是tabletips ,你可以在这这里展示一些关于表的说明';
   return (
