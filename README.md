@@ -436,9 +436,9 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```js
 node_modules/fbjs/lib/Deferred.js.flow:60
  60:     Promise.prototype.done.apply(this._promise, arguments);
-                           ^^^^ property `done`. Property not found in
-495: declare class Promise<+R> {
-     ^ Promise. See lib: /private/tmp/flow/flowlib_34952d31/core.js:495
+                           ^^^^ property ‘done’. Property not found in
+495: declare class Promise{
+  Promise. See lib: /private/tmp/flow/flowlib_34952d31/core.js:495
 
 node_modules/fbjs/lib/shallowEqual.js.flow:29
  29:     return x !== 0 || 1 / (x: $FlowIssue) === 1 / (y: $FlowIssue);
@@ -452,7 +452,6 @@ node_modules/fbjs/lib/shallowEqual.js.flow:29
 <PROJECT_ROOT>/node_modules/fbjs/.*
 ```
 
-Re-run flow, and you shouldn’t get any extra issues.
 重新运行flow，就不会再有问题了。
 
 ## 添加自定义环境变量
@@ -483,6 +482,7 @@ render() {
 在编译期间，`process.env.REACT_APP_SECRET_CODE`会被环境变量`REACT_APP_SECRET_CODE`当前的值替换。记住，`NODE_ENV`变量会自动设置。
 
 当你在浏览器中访问这个app，并观察`<input>`的时候，你会看到它的值被设置为`abcdef`，并且当你执行npm start 的时候，粗体的文字会显示当前在开发环境下。
+
 ```html
 <div>
   <small>You are running this application in <b>development</b> mode.</small>
@@ -554,56 +554,52 @@ REACT_APP_SECRET_CODE=abcdef
 
 ## 开发环境代理API请求
 
->Note: this feature is available with `react-scripts@0.2.3` and higher.
+>注意这个特性仅在`react-scripts@0.2.3`及以上版本可用。
 
-People often serve the front-end React app from the same host and port as their backend implementation.<br>
-For example, a production setup might look like this after the app is deployed:
+大家通常都是将前端React app 和后端实现放在同一个主机和端口上。例如，app 部署之后的生产环境设置像这样：
 
 ```
-/             - static server returns index.html with React app
-/todos        - static server returns index.html with React app
-/api/todos    - server handles any /api/* requests using the backend implementation
+/             - 返回静态服务器上的React app的 index.html
+/todos        - 返回静态服务器上的React app的 index.html
+/api/todos    - 服务器处理所有的后台实现的 /api/\* 请求
 ```
 
-Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
+这样的设置是非必须的。但是，如果你像这样设置。写请求`fetch('/api/todos')`的时候非常方便，开发的时候不用担心重定向它们到别的主机或者端口。
 
-To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
-
+要在开发阶段将开发服务器的请求代理到你的API服务器上，需要在`package.json` 文件中增加一个proxy 字段，如：
 ```js
   "proxy": "http://localhost:4000",
 ```
 
-This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will only attempt to send requests without a `text/html` accept header to the proxy.
+这样，当你在开发环境中`fetch('/api/todos')` 的时候，开发服务器会知道它不是一个静态资源，然后就会讲请求代理到`http://localhost:4000/api/todos`上。开发服务器会尝试以非text/html的accept 头信息的方式发送请求。
 
-Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+这样就方便地避免了[CORS 跨域问题](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations)，以及这类的报错信息。
 
 ```
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 ```
 
-Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
+proxy 只在开发环境中生效（以npm start 起的服务），生产环境上正常访问像/api/todos这样的url 就要再另作配置了。不一定非得要/api 开头，所有非text/html accept头信息的请求都会被转发到特定的代理上。
 
-Currently the `proxy` option only handles HTTP requests, and it won’t proxy WebSocket connections.<br>
-If the `proxy` option is **not** flexible enough for you, alternatively you can:
+当前proxy 选项只能处理HTTP请求，无法代理WebSocket链接。如果proxy 的扩展性不够，你也可以这样做：
 
-* Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
-* Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+* 允许服务器跨域([Express怎么做](http://enable-cors.org/server_expressjs.html)).
+* 使用[环境变量](#adding-custom-environment-variables) 注入正确的服务器主机和端口到app中。 
 
 ## 在开发环境中使用HTTPs
 
->Note: this feature is available with `react-scripts@0.4.0` and higher.
+>这个特性仅在react-scripts@0.4.0及以上版本中支持。
 
-You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](#proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
+你可能需要在开发服务器上部署HTTPS。当使用[proxy特性](#proxying-api-requests-in-development)来代理已经部署了HTTPS 协议的服务器上的API会很好用。
 
-To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
-
+这样的话，要将环境变量HTTPS设置为true, 然后跟以前一样执行npm start:
 #### Windows (cmd.exe)
 
 ```cmd
 set HTTPS=true&&npm start
 ```
 
-(Note: the lack of whitespace is intentional.)
+(注意：这里是故意省略掉空格的)
 
 #### Linux, OS X (Bash)
 
@@ -611,12 +607,11 @@ set HTTPS=true&&npm start
 HTTPS=true npm start
 ```
 
-Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
+服务器会使用一个自己注册的证书，所以访问页面的时候，web浏览器会有提示信息。
 
 ## 在服务器端动态生成meta 标签
 
-Since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
-
+由于 Create React App不支持服务端渲染，你可能会很好奇怎么动态生成<meta>标签，并反映到当前的URL中。要回答这个问题，我们推荐在HTML中增加预置位置，像这样：
 ```html
 <!doctype html>
 <html lang="en">
@@ -625,57 +620,54 @@ Since Create React App doesn’t support server rendering, you might be wonderin
     <meta property="og:description" content="%OG_DESCRIPTION%">
 ```
 
-Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `%OG_TITLE%`, `%OG_DESCRIPTION%`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
+然后，在服务端，不管你用的什么后台，你可以将index.html读入到内存中，然后根据当前URL替换%OG_TITLE% 和%OG_DESCRIPTION% 以及其他预置的值。只要确保插入的值不会破坏页面，插入到HTML是安全的就可以。
 
-If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
+如果你使用的是Node服务，你甚至可以在客户端和服务端共享路由匹配逻辑。但是，对于一些小应用，分别在两者上进行路由匹配也能工作地很好。
 
 ## 运行测试
 
->Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
->[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
+>这个特性仅在react-scripts@0.3.0及以上版本中可用。
+>[阅读升级指南学习如何在旧项目中进行测试](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
 
-Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
+Create React App 使用[Jest](https://facebook.github.io/jest/) 作为它的测试工具。为了继承它，我们给Jest做了一次[大的修复升级](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) ,如果在几年前你听说了它的很多不好的地方，现在不妨再试试。
 
-Jest is a Node-based runner. This means that the tests always run in a Node environment and not in a real browser. This lets us enable fast iteration speed and prevent flakiness.
+Jest 基于Node的测试工具。这意味着测试总是在Node 环境中运行，而不是在一个真正的浏览器中运行。这能加快我们的迭代速度，减少怪异问题。
 
-While Jest provides browser globals such as `window` thanks to [jsdom](https://github.com/tmpvar/jsdom), they are only approximations of the real browser behavior. Jest is intended to be used for unit tests of your logic and your components rather than the DOM quirks.
+因为有Jest 的[jsdom](https://github.com/tmpvar/jsdom)，它提供了浏览器的全局变量，比如window，它们的行为和真正的浏览器几乎一样。Jest 是用来对你的逻辑和组件进行单元测试的，而不是测试DOM的奇怪问题。
 
-We recommend that you use a separate tool for browser end-to-end tests if you need them. They are beyond the scope of Create React App.
+我们建议你单独使用一款用于浏览器端到端的测试工具，如果你需要的话。它超出了Create React App的范围。
 
 ### 文件名规范
 
-Jest will look for test files with any of the following popular naming conventions:
+Jest 会根据一下流行的命名规范查找测试文件：
 
-* Files with `.js` suffix in `__tests__` folders.
-* Files with `.test.js` suffix.
-* Files with `.spec.js` suffix.
+*  __tests__ 文件夹下面以.js的文件。
+* .test.js 结尾的文件
+* .spec.js 结尾的文件
 
-The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
+.test.js 或者.spec.js 或者__tests__文件夹下的文件可以放在src顶层文件夹的任意层级下。
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
+我们建议把测试文件放和被测试的代码放在一块，这样相对引用会更短。如果App.test.js 和App.js文件放在同一个文件夹，那么测试只需要import App from './App'， 而不用一长串的相对路径。在大型项目中，同路径放置也能更快的找到测试文件。
 
 ### 命令行交互
 
-When you run `npm test`, Jest will launch in the watch mode. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
+执行npm test的时候，Jest 会处于watch模式。每当你保存文件的时候，它就会重新运行测试用例，就像npm start重新编译代码一样。
 
-The watcher includes an interactive command-line interface with the ability to run all tests, or focus on a search pattern. It is designed this way so that you can keep it open and enjoy fast re-runs. You can learn the commands from the “Watch Usage” note that the watcher prints after every run:
-
-![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
+watcher 提供了一个可交互的命令行界面用来运行所有的测试用例。它这样的设计方式能开着命令行享受快速重新运行测试的快乐。你可以通过watcher每次运行之后打印出来的“Watch usage”的提示学习相关命令[Jest watch 模式](http://facebook.github.io/jest/img/blog/15-watch.gif)
 
 ### 版本控制集成
 
-By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests runs fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
+默认情况下，当执行npm test的时候，Jest 只会运行从上次提到现在变动过的文件对应的测试。这是一种快速测试的优化方案，不用管你有多少测试用例。但是，那是在假设你的没有频繁提交没有通过测试测代码的前提下。
 
-Jest will always explicitly mention that it only ran tests related to the files changed since the last commit. You can also press `a` in the watch mode to force Jest to run all tests.
+Jest 会显示地提醒，它运行的是从上次提交到目前变动了的文件相关的测试。如果你运行所有的测试用例，可以在watch 模式下按下a 按键。
 
-Jest will always run all tests on a [continuous integration](#continuous-integration) server or if the project is not inside a Git or Mercurial repository.
+在[持续集成](#continuous-integration)服务器上，Jest总是会运行所有的测试用例，除非这个项目不在Git 或者 Mercurial 仓库上。
 
 ### 测试编写
 
-To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
+通过在it()和test()中添加测试名和代码来创建测试。你也可以选择使用describe() 来包裹it() 和ttest() 的逻辑代码块，但这不是非必须的。
 
-Jest provides a built-in `expect()` global function for making assertions. A basic test could look like this:
-
+Jest 提供了一个内置的全局函数expect() 用来做判断。一个基本的测试看起来像这样：
 ```js
 import sum from './sum';
 
