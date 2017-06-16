@@ -677,15 +677,14 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect()` matchers supported by Jest are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).<br>
-You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](http://facebook.github.io/jest/docs/api.html#tobecalled) to create “spies” or mock functions.
+所有Jest支持的`expect()` 匹配方法的[文档在这里](http://facebook.github.io/jest/docs/api.html#expect-value)。你也可以使用
+[`jest.fn()` 和 `expect(fn).toBeCalled()`](http://facebook.github.io/jest/docs/api.html#tobecalled) 来创建模拟方法。
 
 ### 测试组件
 
-There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
+组件测试技术有很多。范围从校验组件渲染不会抛出异常的冒烟测试，到浅层渲染，测试输出结果，到完全渲染，测试组件的生命周期，以及状态变化。
 
-Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:
-
+不同的项目根据组件的变化频率以及它们包含的逻辑进行不同的测试权衡。如果你还没有决定使用何种测试策略，我们推荐你对组件先进行简单的冒烟测试：
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -697,11 +696,11 @@ it('renders without crashing', () => {
 });
 ```
 
-This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot value with very little effort so they are great as a starting point, and this is the test you will find in `src/App.test.js`.
+这个测试挂载了一个组件，并且保证它在渲染的时候不会报错。这样的测试只要一点点工作就能提供很多结果，它们作为一个开始的点。你在src/App.test.js 文件中会找到这个测试用例。
 
-When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
+当你遇到改变组件引起的bug的时候，你会更加清楚你的应用中哪一块需要更多的测试。这或许是个引入更多具体的对预期输出和行为进行测试的断言的好时机。
 
-If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). You can write a smoke test with it too:
+如果你倾向于单独测试组件中渲染的子组件的话，我们推荐[Enzyme](http://airbnb.io/enzyme/) 的[`shallow()` 渲染API](http://airbnb.io/enzyme/docs/api/shallow.html)。你也可以用它来写冒烟测试：
 
 ```sh
 npm install --save-dev enzyme react-addons-test-utils
@@ -717,11 +716,11 @@ it('renders without crashing', () => {
 });
 ```
 
-Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
+与之前的使用ReactDOM.render()的冒烟测试不同，这个测试只渲染了<App>，并没有渲染更深层次的内容。例如，即使<App>自身渲染<Button>的时候报错，这个用例也会通过。浅层渲染非常适合单独的单元测试，但是你可能还希望创建一些完全渲染的测试用例来保证组件集成的正确性。Enzyme 支持[用mount 进行完全渲染](http://airbnb.io/enzyme/docs/api/mount.html)，你可以用它进行状态变化测试和组件生命周期测试。
 
-You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
+更多的测试技术，你可以阅读[Enzyme 文档](http://airbnb.io/enzyme/)。 Enzyme 文档使用Chai 和Sinon 来做断言，但是你可以不用它们，Jest 提供了内置的expect() 和jest.fn() 来做检测。
 
-Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:
+这是一个用Jest 比较方法来重写的用Enzyme文档检测具体输出的例子：
 
 ```js
 import React from 'react';
@@ -736,11 +735,8 @@ it('renders welcome message', () => {
 });
 ```
 
-All Jest matchers are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).<br>
-Nevertheless you can use a third-party assertion library like [Chai](http://chaijs.com/) if you want to, as described below.
+所有Jest比较方法的[文档在这里](http://facebook.github.io/jest/docs/api.html#expect-value)。与此同时，只要你愿意，你也可以使用第三方的断言库比如[Chai](http://chaijs.com/) 。
 
-
-（OK 翻译到这里就睡觉吧）
 
 ### Using Third Party Assertion Libraries
 
@@ -871,9 +867,10 @@ In contrast, **jsdom is not needed** for the following APIs:
 
 Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html). Longer term, this is the direction we are interested in exploring, but snapshot testing is [not fully baked yet](https://github.com/facebookincubator/create-react-app/issues/372) so we don’t officially encourage its usage yet.
 
-### Experimental Snapshot Testing
+### 实验中的快照测试
 
 Snapshot testing is a new feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output.
+快照测试是Jest的一个新特性。
 
 This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
