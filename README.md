@@ -349,89 +349,89 @@ webpack 会查找css中所有的相对模块引用（它们欧式以“./”开�
 
 >注意：这个特性在`react-scripts@0.5.0` 及更高的版本中可用。
 
-如上所述，通常鼓励在Javascript 中import静态资源 。这种机制有很多好处：
+如上所述，通常鼓励在Javascript 中import静态资源。这种机制有很多好处：
 
 * 脚本和样式都被最小化和组织到一起，避免了额外的网络开销。
 * 文件缺失引起编译错误，而不是把404错误推向用户。
 * 文件名包含内容hash值，所以不用担心老版本的浏览器缓存问题。
 
-However there is an **escape hatch** that you can use to add an asset outside of the module system.
 
-If you put a file into the `public` folder, it will **not** be processed by Webpack. Instead it will be copied into the build folder untouched.   To reference assets in the `public` folder, you need to use a special variable called `PUBLIC_URL`.
+但是，有一个应急方法可以添加模块系统之外的静态文件。
 
-Inside `index.html`, you can use it like this:
+如果你把一个文件放在public 文件夹里面，它就不会被webpack处理。它会被原封不动地拷贝到build文件夹下面。要使用public中的静态资源，需要使用一个叫PUBLIC_URL的特殊变量。
+
+在index.html中，你可以像这样使用：
 
 ```html
 <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 ```
 
-Only files inside the `public` folder will be accessible by `%PUBLIC_URL%` prefix. If you need to use a file from `src` or `node_modules`, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.
+只有public文件夹下面的文件可以通过%PUBLIC_URL%前缀访问。如果你需要使用src 或者node_modules下面的文件你需要将文件拷贝到public 下面，显示表明你的意图，让它们成为你build 的一部分。
 
-When you run `npm run build`, Create React App will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL.
+当你执行npm run build的时候，Create React App 会把`%PUBLIC_URL%`替换成一个正确的绝对路径，这样就算是你使用了客户端路由，或者寄主在一个非根url 上的文件都能正常访问。
 
-In JavaScript code, you can use `process.env.PUBLIC_URL` for similar purposes:
+在Javascript代码中，你可以使用`process.env.PUBLIC_URL` 达到同样的目的：
 
 ```js
 render() {
-  // 注意这是一个应急出口，谨慎使用 
+  // 注意这是一个应急方法，谨慎使用 
   // 如上文“添加图片和字体”所述的， 通常推荐使用import 静态资源url 
   return (<img src=`{process.env.PUBLIC_URL + '/img/logo.png'}`/>);
 }
 ```
 
-Keep in mind the downsides of this approach:
+记住这种方式的缺点：
+* public文件夹下面的文件都不能后处理或者最小化。
+* 缺失的文件在编译期间无法调用，会直接抛给用户404错误。
+* 最终文件名不会包含内容hash值，这样每次变化时需要加上访问参数或者重命名。
 
-* None of the files in `public` folder get post-processed or minified.
-* Missing files will not be called at compilation time, and will cause 404 errors for your users.
-* Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
+但是，从html 中访问像[`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest) 或者包含打包好的代码之外的小块脚本如[`pace.js`](http://github.hubspot.com/pace/docs/welcome/) 会非常方便。
 
-However, it can be handy for referencing assets like [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest) from HTML, or including small scripts like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
+注意，如果你要添加一个生命全局变量的`<script>`，你还需要阅读接下来的章节。
 
-Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
+## 使用全局变量
 
-## Using Global Variables
+如果你要在html文件中包含一个定义了全局变量的脚本，并且尝试在代码中使用其中的某些全局变量，linter 会提示它找不到变量的定义。
 
-When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
-
-You can avoid this by reading the global variable explicitly from the `window` object, for example:
+你可以通过显示地从window对象上读取全局变量避免报错的情况，比如：
 
 ```js
 const $ = window.$;
 ```
 
-This makes it obvious you are using a global variable intentionally rather than because of a typo.
+很明显这样你就是在有意地使用一个全局变量而不是拼写错误。
 
-Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
+另外你可以通过在任意一行代码之后加上`// eslint-disable-line` 强制linter 忽略它。
 
-## Adding Bootstrap
+## 添加 Bootstrap
 
-You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
+你不是必须非得和React 一起使用[React Bootstrap](https://react-bootstrap.github.io)，但是它是一个集成Bootstrap 和React app 的流行库。如果你需要它，你可以在Create React App 中按照这些步骤集成它：
 
-Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well:
+从NPM中安装 react bootstrap 和bootstrap。React Bootstrap 不包含Bootstrap CSS，因此你也需要安装：
 
 ```
 npm install react-bootstrap --save
 npm install bootstrap@3 --save
 ```
 
-Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```src/index.js``` file:
+在```src/index.js``` 文件中引入Bootstrap CSS 和选择的Bootstrap 主题CSS：
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 ```
 
-Import required React Bootstrap components within ```src/App.js``` file or your custom component files:
+```src/App.js```中引入必要的React Bootstrap 组件，或者你自定义的组件：
 
 ```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
-Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
+现在你已经准备好了，在你的组件的render 方法中使用引入的React Bootstrap 组件了。这里有一个使用React Bootstrap重做的例子，[`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js)。
 
-## Adding Flow
+## 添加 Flow
 
-Flow typing is currently [not supported out of the box](https://github.com/facebookincubator/create-react-app/issues/72) with the default `.flowconfig` generated by Flow. If you run it, you might get errors like this:
+类型检查Flow 默认生成的`.flowconfig`，[当前不支持](https://github.com/facebookincubator/create-react-app/issues/72)。运行会产生这样的错误信息：
 
 ```js
 node_modules/fbjs/lib/Deferred.js.flow:60
@@ -445,7 +445,7 @@ node_modules/fbjs/lib/shallowEqual.js.flow:29
                                    ^^^^^^^^^^ identifier `$FlowIssue`. Could not resolve name
 ```
 
-To fix this, change your `.flowconfig` to look like this:
+要修复这个，需要像这样修改你的`.flowconfig`：
 
 ```ini
 [ignore]
@@ -453,24 +453,19 @@ To fix this, change your `.flowconfig` to look like this:
 ```
 
 Re-run flow, and you shouldn’t get any extra issues.
+重新运行flow，就不会再有问题了。
 
-## Adding Custom Environment Variables
+## 添加自定义环境变量
 
->Note: this feature is available with `react-scripts@0.2.3` and higher.
+>这个特性只在`react-scripts@0.2.3`及更高的版本下支持
 
-Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
-default you will have `NODE_ENV` defined for you, and any other environment variables starting with
-`REACT_APP_`. These environment variables will be defined for you on `process.env`. For example, having an environment
-variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`, in addition
-to `process.env.NODE_ENV`.
+你的项目中可以使用你环境中声明的变量，就好像它们是在你的JS文件声明的一样。默认情况下，你可以使用`NODE_ENV` 和其他以`REACT_APP_`开头的环境变量。这些环境变量会在`process.env`上定义。比如，你有一个叫`REACT_APP_SECRET_CODE`的环境变量，那么在JS 中就可以通过`process.env.REACT_APP_SECRET_CODE`访问，`process.env.NODE_ENV` 也是。
 
->Note: Changing any environment variables will require you to restart the development server if it is running.
+>注意：修改任何环境变量，如果开发server 正在运行都要进行重启。
 
-These environment variables can be useful for displaying information conditionally based on where the project is
-deployed or consuming sensitive data that lives outside of version control.
+这些环境变量在展示项目在哪里部署，敏感数据在何处调用等不在版本控制之外的信息的时候非常有用。
 
-First, you need to have environment variables defined. For example, let’s say you wanted to consume a secret defined
-in the environment inside a `<form>`:
+首先，环境变量要定义。例如，假设你要想在`<form>` 中调用环境变量中定义的密码：
 
 ```jsx
 render() {
@@ -485,10 +480,9 @@ render() {
 }
 ```
 
-During the build, `process.env.REACT_APP_SECRET_CODE` will be replaced with the current value of the `REACT_APP_SECRET_CODE` environment variable. Remember that the `NODE_ENV` variable will be set for you automatically.
+在编译期间，`process.env.REACT_APP_SECRET_CODE`会被环境变量`REACT_APP_SECRET_CODE`当前的值替换。记住，`NODE_ENV`变量会自动设置。
 
-When you load the app in the browser and inspect the `<input>`, you will see its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
-
+当你在浏览器中访问这个app，并观察`<input>`的时候，你会看到它的值被设置为`abcdef`，并且当你执行npm start 的时候，粗体的文字会显示当前在开发环境下。
 ```html
 <div>
   <small>You are running this application in <b>development</b> mode.</small>
@@ -498,7 +492,7 @@ When you load the app in the browser and inspect the `<input>`, you will see its
 </div>
 ```
 
-Having access to the `NODE_ENV` is also useful for performing actions conditionally:
+`NODE_ENV`对于执行条件行为时也非常有用：
 
 ```js
 if (process.env.NODE_ENV !== 'production') {
@@ -506,22 +500,18 @@ if (process.env.NODE_ENV !== 'production') {
 }
 ```
 
-The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
-value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
-a `.env` file.
+上面form 会查找环境中一个叫`REACT_APP_SECRET_CODE`的变量。为了获取它的值，你需要在环境中定义它。有两种方式定义：或者在shell 中定义，或者在一个.env 文件中定义。
 
-### Adding Temporary Environment Variables In Your Shell
+### 在shell 中添加临时环境变量
 
-Defining environment variables can vary between OSes. It's also important to know that this manner is temporary for the
-life of the shell session.
+定义环境变量因操作系统不同而不同。这种方式的变量只在shell session 期间存在，明白这一点非常重要。
 
 #### Windows (cmd.exe)
 
 ```cmd
 set REACT_APP_SECRET_CODE=abcdef&&npm start
 ```
-
-(Note: the lack of whitespace is intentional.)
+（注意：这里是故意缺少空格的）
 
 #### Linux, OS X (Bash)
 
@@ -529,44 +519,40 @@ set REACT_APP_SECRET_CODE=abcdef&&npm start
 REACT_APP_SECRET_CODE=abcdef npm start
 ```
 
-### Adding Development Environment Variables In `.env`
+### 在.env 中添加开发环境变量
 
->Note: this feature is available with `react-scripts@0.5.0` and higher.
+>注意这个特性仅在`react-scripts@0.5.0`及以上版本中可用。
 
-To define permanent environment variables, create a file called `.env` in the root of your project:
+要定义一个永久的环境变量，在你的项目的根路径下创建一个.env 的文件。
 
 ```
 REACT_APP_SECRET_CODE=abcdef
 ```
 
-These variables will act as the defaults if the machine does not explicitly set them.<br>
-Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
+如果机器没有显示地设置它们，那么这些值就是这些变量的默认值。更多详细信息，参见[.env 文档](https://github.com/motdotla/dotenv)
 
->Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
-these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
+>注意：如果你在为开发环境定义环境变量，你的CI 或者主机平台大部分也坑内需要这些变量。查看相关文档看看怎么操作。例如，看看两篇文档[Travis CI](https://docs.travis-ci.com/user/environment-variables/) 和 [Heroku](https://devcenter.heroku.com/articles/config-vars)
 
-## Can I Use Decorators?
 
-Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
-Create React App doesn’t support decorator syntax at the moment because:
+## 我可以使用修饰符吗？
 
-* It is an experimental proposal and is subject to change.
-* The current specification version is not officially supported by Babel.
-* If the specification changes, we won’t be able to write a codemod because we don’t use them internally at Facebook.
+很多流行的库在文档中使用[修饰符](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)。Create React App暂时不支持修饰符，因为：
 
-However in many cases you can rewrite decorator-based code without decorators just as fine.<br>
-Please refer to these two threads for reference:
+* 它是一个试验阶段的议案，会发生变化。
+* 当前的规格说明，Babel 没有正式支持。
+* 如果规格说明变了，我们不可能去写一个codemod, 因为facebook 内部没有使用。
 
+但是，在很多场景下，你也可以在不使用修饰符的情况下重写基于修饰符的代码，请参考下面两篇引文：
 * [#214](https://github.com/facebookincubator/create-react-app/issues/214)
 * [#411](https://github.com/facebookincubator/create-react-app/issues/411)
 
-Create React App will add decorator support when the specification advances to a stable stage.
+修饰符的规格说明发展到稳定阶段的时候，Create React App会增加对它的支持的。
 
-## Integrating with a Node Backend
+## 集成Node 后台
 
-Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) for instructions on integrating an app with a Node backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
+参考[学习教程](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/)来获得如何集成一个运行在其他端口的Node 后台，并且使用fetch() 访问后台接口的相关指导。你可以在Github上找到类似的实例：[这里](https://github.com/fullstackreact/food-lookup-demo).
 
-## Proxying API Requests in Development
+## 开发环境代理API请求
 
 >Note: this feature is available with `react-scripts@0.2.3` and higher.
 
@@ -603,7 +589,7 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
 
-## Using HTTPS in Development
+## 在开发环境中使用HTTPs
 
 >Note: this feature is available with `react-scripts@0.4.0` and higher.
 
@@ -627,7 +613,7 @@ HTTPS=true npm start
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
 
-## Generating Dynamic `<meta>` Tags on the Server
+## 在服务器端动态生成meta 标签
 
 Since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
 
@@ -643,7 +629,7 @@ Then, on the server, regardless of the backend you use, you can read `index.html
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
 
-## Running Tests
+## 运行测试
 
 >Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
 >[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
@@ -656,7 +642,7 @@ While Jest provides browser globals such as `window` thanks to [jsdom](https://g
 
 We recommend that you use a separate tool for browser end-to-end tests if you need them. They are beyond the scope of Create React App.
 
-### Filename Conventions
+### 文件名规范
 
 Jest will look for test files with any of the following popular naming conventions:
 
@@ -668,7 +654,7 @@ The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at
 
 We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
 
-### Command Line Interface
+### 命令行交互
 
 When you run `npm test`, Jest will launch in the watch mode. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
 
@@ -676,7 +662,7 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
 
-### Version Control Integration
+### 版本控制集成
 
 By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests runs fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
 
@@ -684,7 +670,7 @@ Jest will always explicitly mention that it only ran tests related to the files 
 
 Jest will always run all tests on a [continuous integration](#continuous-integration) server or if the project is not inside a Git or Mercurial repository.
 
-### Writing Tests
+### 测试编写
 
 To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
 
@@ -702,7 +688,7 @@ it('sums numbers', () => {
 All `expect()` matchers supported by Jest are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).<br>
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](http://facebook.github.io/jest/docs/api.html#tobecalled) to create “spies” or mock functions.
 
-### Testing Components
+### 测试组件
 
 There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
 
@@ -760,6 +746,9 @@ it('renders welcome message', () => {
 
 All Jest matchers are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).<br>
 Nevertheless you can use a third-party assertion library like [Chai](http://chaijs.com/) if you want to, as described below.
+
+
+（OK 翻译到这里就睡觉吧）
 
 ### Using Third Party Assertion Libraries
 
@@ -1196,9 +1185,9 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
-## Troubleshooting
+## 排忧解难
 
-### `npm test` hangs on macOS Sierra
+### `npm test` macOS Sierra上hang 住
 
 If you run `npm test` and the console gets stuck after printing `react-scripts test --env=jsdom` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebookincubator/create-react-app#713](https://github.com/facebookincubator/create-react-app/issues/713).
 
