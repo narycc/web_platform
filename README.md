@@ -738,26 +738,26 @@ it('renders welcome message', () => {
 所有Jest比较方法的[文档在这里](http://facebook.github.io/jest/docs/api.html#expect-value)。与此同时，只要你愿意，你也可以使用第三方的断言库比如[Chai](http://chaijs.com/) 。
 
 
-### Using Third Party Assertion Libraries
+### 使用第三方断言库
 
-We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
+我们推荐使用expect()来断言，使用jest.fn()来作中间层。如果你有任何问题，请[在这里提出](https://github.com/facebook/jest/issues/new)，我们会修复。我们会让它更适用于React的，比如[美化React元素以JSX的形式输出](https://github.com/facebook/jest/pull/1566)
 
-However, if you are used to other libraries, such as [Chai](http://chaijs.com/) and [Sinon](http://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
+但是，如果你习惯使用其他的库，比如[Chai](http://chaijs.com/) 和 [Sinon](http://sinonjs.org/)，或者你还有使用了它们的代码，你可以像这样正常地引用它们：
 
 ```js
 import sinon from 'sinon';
 import { expect } from 'chai';
 ```
 
-and then use them in your tests like you normally do.
+然后像往常一样在你的测试用例中使用它们。
 
-### Initializing Test Environment
+### 初始化测试环境
 
->Note: this feature is available with `react-scripts@0.4.0` and higher.
+>注意：这个特性仅在react-scripts@0.4.0及以上版本中可用。
 
-If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+如果你的测试中需要mock 浏览器API，或者在运行测试之前需要做一个全局的设置，那么在你的项目中增加src/setupTests.js。它会在运行测试用例之前自动执行的。
 
-For example:
+例如：
 
 #### `src/setupTests.js`
 ```js
@@ -769,33 +769,31 @@ const localStorageMock = {
 global.localStorage = localStorageMock
 ```
 
-### Focusing and Excluding Tests
+### 关注测试和排除测试 
 
-You can replace `it()` with `xit()` to temporarily exclude a test from being executed.<br>
-Similarly, `fit()` lets you focus on a specific test without running any other tests.
+你可以使用xit()替换it()来将一些测试暂时排除在被测试的用例之外。类似的，fit() 可以让你把注意力放在某个特殊的测试上，而忽略其他用例的测试。
 
-### Coverage Reporting
+### 覆盖率报告
 
-Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.<br>
-Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
+Jest 集合了一个兼容ES6 的覆盖率报告，无需配置。运行 npm test -- --coverage 会生成一个像这样的覆盖率报告：
+![覆盖率报告](http://i.imgur.com/5bFhnTS.png)
 
-![coverage report](http://i.imgur.com/5bFhnTS.png)
+运行测试用例的时候生成覆盖率会更慢，所以建议在通常的工作流之外单独运行覆盖率。
 
-Note that tests run much slower with coverage so it is recommended to run it separately from your normal workflow.
+### 持续集成
 
-### Continuous Integration
+默认情况下，npm test 的watcher会一直在交互命令行上运行，你可以强制它只运行一次，然后通过设置一个叫CI 的环境变量来结束进程。
 
-By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
+当你使用npm run build 构建应用的时候，默认情况下是不会检查语法警告的。像npm test，你可以通过设置环境变量CI 来强制编译的时候执行语法警告检查。
 
-When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
+流行的CI服务器默认设置了环境变量CI，但是你也可以自己设置：
 
-Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
-
-### On CI servers
+### 在CI 服务器上
 #### Travis CI
 
-1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
-1. Add a `.travis.yml` file to your git repository.
+跟着[Travis开始指南](https://docs.travis-ci.com/user/getting-started/)来同步你的Github 仓库。你可能需要手动地在你的[profile](https://travis-ci.org/profile)页面做一些初始化设置。
+
+1. 添加.travis.yml 文件到你的代码仓库中。
 ```
 language: node_js
 node_js:
@@ -808,10 +806,10 @@ script:
   - npm test
   - npm run build
 ```
-1. Trigger your first build with a git push.
-1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+2. 执行git push 触发第一次编译。
+3. 如果有需要，[自定义你的 Travis CI 编译](https://docs.travis-ci.com/user/customizing-the-build/).
 
-### On your own environment
+### 在你自己的环境上
 ##### Windows (cmd.exe)
 
 ```cmd
@@ -822,7 +820,7 @@ set CI=true&&npm test
 set CI=true&&npm run build
 ```
 
-(Note: the lack of whitespace is intentional.)
+(注意：这里是故意去掉空格的)
 
 ##### Linux, OS X (Bash)
 
@@ -834,16 +832,15 @@ CI=true npm test
 CI=true npm run build
 ```
 
-The test command will force Jest to run tests once instead of launching the watcher.
+这个测试命令会强制Jest 只运行一次测试用例，而不会启动watcher。
 
->  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+> 如果你在开发环境中频繁地做这个操作，请[在这里](https://github.com/facebookincubator/create-react-app/issues/new) 告诉我们你的使用案例，因为我们想要将watcher 的体验最优，并且我们时刻准备着让它能够兼容更多的工作流。
 
-The build command will check for linter warnings and fail if any are found.
+这个编译命令会检查语法错误，如果有发现语法错误就是失败。
 
-### Disabling jsdom
+### 禁用jsdom
 
-By default, the `package.json` of the generated project looks like this:
-
+默认情况下，生成项目的 package.json 看起来像这样：
 ```js
   // ...
   "scripts": {
@@ -852,88 +849,85 @@ By default, the `package.json` of the generated project looks like this:
   }
 ```
 
-If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster.<br>
-To help you make up your mind, here is a list of APIs that **need jsdom**:
+如果你知道你的用例中没有依赖[jsdom](https://github.com/tmpvar/jsdom) 的，你可以安全地移除 --env=jsdom，这样你的测试用例会运行的更快。
+为了帮助你更明确，这里有一个需要jsdom 的API 列表：
 
-* Any browser globals like `window` and `document`
+* 任何浏览器全局变量，如window 和document
 * [`ReactDOM.render()`](https://facebook.github.io/react/docs/top-level-api.html#reactdom.render)
-* [`TestUtils.renderIntoDocument()`](https://facebook.github.io/react/docs/test-utils.html#renderintodocument) ([a shortcut](https://github.com/facebook/react/blob/34761cf9a252964abfaab6faf74d473ad95d1f21/src/test/ReactTestUtils.js#L83-L91) for the above)
-* [`mount()`](http://airbnb.io/enzyme/docs/api/mount.html) in [Enzyme](http://airbnb.io/enzyme/index.html)
+* [`TestUtils.renderIntoDocument()`](https://facebook.github.io/react/docs/test-utils.html#renderintodocument) ([a shortcut](https://github.com/facebook/react/blob/34761cf9a252964abfaab6faf74d473ad95d1f21/src/test/ReactTestUtils.js#L83-L91) )
+* [Enzyme](http://airbnb.io/enzyme/index.html) 中的 [`mount()`](http://airbnb.io/enzyme/docs/api/mount.html)  
 
-In contrast, **jsdom is not needed** for the following APIs:
+相反，下面这些API 不需要jsdom:
 
-* [`TestUtils.createRenderer()`](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) (shallow rendering)
+* [`TestUtils.createRenderer()`](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) (浅渲染)
 * [`shallow()`](http://airbnb.io/enzyme/docs/api/shallow.html) in [Enzyme](http://airbnb.io/enzyme/index.html)
 
-Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html). Longer term, this is the direction we are interested in exploring, but snapshot testing is [not fully baked yet](https://github.com/facebookincubator/create-react-app/issues/372) so we don’t officially encourage its usage yet.
+最后，[快照测试](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)也不需要jsdom。长期来看，这是我们有兴趣探索的方向，但是快照测试[尚未成熟(https://github.com/facebookincubator/create-react-app/issues/372), 所以我们不鼓励使用它。
 
 ### 实验中的快照测试
 
-Snapshot testing is a new feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output.
-快照测试是Jest的一个新特性。
+快照测试是Jest的一个新特性。它会自动生成组件的快照文本，并且保存在磁盘上，所以如果UI输出改变了，你不需要针对组件输出再写判断就能被通知到。
 
-This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
+这个特性还在试验阶段，[还有一些大的使用问题](https://github.com/facebookincubator/create-react-app/issues/372) 。所以我们只鼓励喜欢尝试试验技术的你使用它。我们打算逐步改善它，并且将它作为React 组件测试的默认解决方案，但这需要时间。[阅读更多关于快照测试的信息](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
-### Editor Integration
+### 编辑器集成
 
-If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates. 
+如果你使用[Visual Studio Code](https://code.visualstudio.com)，有一个[Jest 插件](https://github.com/orta/vscode-jest)可以很好地运行Create React APP。它使得文本编辑器能够像IDE一样使用：以打印可能失败的信息的形式显示测试运行的状态，自动开始和结束watcher，提供一键式快照更新。
 
-![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
+![VS Code Jest 预览](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
-## Developing Components in Isolation
+## 开发独立组件
 
-Usually, in an app, you have a lot of UI components, and each of them has many different states.
-For an example, a simple button component could have following states:
+通常，一个应用中有很多UI组件，并且每个都有很多不同的状态。例如，一个简单的按钮组件可能有下面这些状态：
+* 一个text的标签
+* 一个表情符号
+* 一个disabled状态
 
-* With a text label.
-* With an emoji.
-* In the disabled mode.
+通常，如果不运行app 或者一些实例，很难看出这些状态。
 
-Usually, it’s hard to see these states without running a sample app or some examples.
+Create React App 默认情况下不包含任何这种工具，但是你可以方便地添加[React Storybook](https://github.com/kadirahq/react-storybook)到你的项目中去。**这个是一个在app 之外开发组件并观察它的状态的第三方的工具**
 
-Create React App doesn't include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+![React Storybook 实例](http://i.imgur.com/7CIAWpB.gif)
 
-![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+你可以将Storybook 部署成一个静态app。这样的话，你项目组的每个人在不用启动后台服务器或者创建账号的情况都能看到UI组件的不同状态。
 
-You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+**这里展示如何对你的应用设置Storybook：**
 
-**Here’s how to setup your app with Storybook:**
-
-First, install the following npm package globally:
+首先，全局安装npm 包：
 
 ```sh
 npm install -g getstorybook
 ```
 
-Then, run the following command inside your app’s directory:
+然后在你的项目目录下执行这个命令：
 
 ```sh
 getstorybook
 ```
 
-After that, follow the instructions on the screen.
+然后按照屏幕上的指示操作。
 
-Learn more about React Storybook:
+了解更多关于React Storybook：
 
-* Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
-* [GitHub Repo](https://github.com/kadirahq/react-storybook)
-* [Documentation](https://getstorybook.io/docs)
-* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
+* 截屏： [入门 React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
+* [GitHub 地址](https://github.com/kadirahq/react-storybook)
+* [文档](https://getstorybook.io/docs)
+* [快照测试](https://github.com/kadirahq/storyshots) with React Storybook
 
-## Making a Progressive Web App
+## 制作PWA
 
-You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+你可以按照[这个库](https://github.com/jeffposnick/create-react-pwa)中的步骤，把你的项目转换成一个[Progressive Web App](https://developers.google.com/web/progressive-web-apps/)。
 
-## Deployment
+## 部署
 
-`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For example, Python contains a built-in HTTP server that can serve static files:
+`npm run build` 会创建一个 `build` 文件夹，下面存放用于生产环境的编译文件。部署你最喜欢的HTTP服务器让上网者访问你的网站的时候指向index.html 文件，访问类似`/static/js/main.<hash>.js`的静态路径能得到`/static/js/main.<hash>.js`的文件内容。例如，Python 内置了一个静态文件的HTTP服务器：
 
 ```sh
 cd build
 python -m SimpleHTTPServer 9000
 ```
 
-If you're using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
+如果你正使用[Node](https://nodejs.org/) 和 [Express](http://expressjs.com/)作服务端，代码看起来可能像这样：
 
 ```javascript
 const express = require('express');
@@ -949,15 +943,17 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-Create React App is not opinionated about your choice of web server. Any static file server will do. The `build` folder with static assets is the only output produced by Create React App.
+Create React App 不会限制你如何选择web服务器，任何静态服务器都可以。build 是Create React App 生成的唯一用来放置静态文件的目录。
 
-However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
+不过，如果你要使用客户端路由，这还不够。如果你要在单页应用中支持类似‘/todos/42’这样的URL 路径，请阅读下一章节。
 
-### Serving Apps with Client-Side Routing
+### 使用客户端路由
 
-If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
 
-This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
+如果你使用了后台使用HTML5[`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries)实现的路由（比如[React Router](https://github.com/ReactTraining/react-router) 的 `browserHistory`），很多静态文件服务器会失效。例如，如果你使用了React Router来路由‘/todos/42’这个路径，开发服务器会返回`localhost:3000/todos/42`， 但是如上的Express部署的生产环境就不会指向这个路径。
+
+
+这是因为当你要访问`/todos/42`这样的页面的时候，服务器会去查找`build/todos/42`，但找不到。服务器需要配置`/todos/42`的请求响应以服务index.html。比如，我们可以修改上面的Express 示例代码，使得未知的路径指向index.html：
 
 ```diff
  app.use(express.static('./build'));
@@ -968,28 +964,26 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
  });
 ```
 
-Now requests to `/todos/42` will be handled correctly both in development and in production.
+现在`/todos/42` 在开发和生产环境下都能被正确处理了。
 
-### Building for Relative Paths
+### 按相对路径编译
 
-By default, Create React App produces a build assuming your app is hosted at the server root.<br>
-To override this, specify the `homepage` in your `package.json`, for example:
-
+默认情况下，Create React App会假设你的应用是挂载在服务器的根目录下，生成一个build文件。要重置这个默认，需要在package.json中指定homepage参数，例如：
 ```js
   "homepage": "http://mywebsite.com/relativepath",
 ```
 
-This will let Create React App correctly infer the root path to use in the generated HTML file.
-
+这样能让Create React App 在生成的HTML文件中正确地使用相对root 的路径。
 
 ### Firebase
 
-Install the Firebase CLI if you haven't already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
+运行`npm install -g firebase-tools`来安装Firebase CLI。注册一个[Firebase 账户](https://console.firebase.google.com/)之后创建一个新项目，运行firebase login然后以你之前注册的Firebase账号登录。
 
-Then run the `firebase init` command from your project's root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
+
+在项目的根目录下执行`firebase init`。你需要选择**主机：配置和部署Firebase主机地址** ，选择你之前步骤中创建的Firebase 项目。你需要同意之前创建的`database.rules.json`， 选择build作为公开目录，并且回复y同意**配置单页应用**。
 
 ```sh
-    === Project Setup
+    === 项目设置
 
     First, let's associate this project directory with a Firebase project.
     You can create multiple project aliases by running firebase use --add,
@@ -997,7 +991,7 @@ Then run the `firebase init` command from your project's root. You need to choos
 
     ? What Firebase project do you want to associate as default? Example app (example-app-fd690)
 
-    === Database Setup
+    === 数据库设置
 
     Firebase Realtime Database Rules allow you to define how your data should be
     structured and when your data can be read from and written to.
@@ -1007,7 +1001,7 @@ Then run the `firebase init` command from your project's root. You need to choos
     Future modifications to database.rules.json will update Database Rules when you run
     firebase deploy.
 
-    === Hosting Setup
+    === 主机设置
 
     Your public directory is the folder (relative to your project directory) that
     will contain Hosting assets to uploaded with firebase deploy. If you
@@ -1023,7 +1017,7 @@ Then run the `firebase init` command from your project's root. You need to choos
     ✔  Firebase initialization complete!
 ```
 
-Now, after you create a production build with `npm run build`, you can deploy it by running `firebase deploy`.
+现在，在运行`npm run build`生成生产环境包之后，你可以通过运行`firebase deploy`来部署。
 
 ```sh
     === Deploying to 'example-app-fd690'...
@@ -1041,36 +1035,36 @@ Now, after you create a production build with `npm run build`, you can deploy it
     Hosting URL: https://example-app-fd690.firebaseapp.com
 ```
 
-For more information see [Add Firebase to your JavaScript Project](https://firebase.google.com/docs/web/setup).
+更多信息参见 [将Firebase添加到JS项目中](https://firebase.google.com/docs/web/setup)。
 
-### GitHub Pages
+### GitHub 页面
 
->Note: this feature is available with `react-scripts@0.2.0` and higher.
+>这个特性仅在`react-scripts@0.2.0`及更高版本中可用。
 
-#### Step 1: Add `homepage` to `package.json`
+#### 第1步：在package.json中添加homepage设置
 
-**The step below is important!**<br>
-**If you skip it, your app will not deploy correctly.**
+**下面的步骤很重要**
+**如果你跳过了这里，你的项目将无法正确部署。**
 
-Open your `package.json` and add a `homepage` field:
+打开package.json并增加一个homepage字段：
 
 ```js
   "homepage": "https://myusername.github.io/my-app",
 ```
 
-Create React App uses the `homepage` field to determine the root URL in the built HTML file.
+Create React App 使用homepage字段来决定生成的HTML文件中的root URL。
 
-#### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
+#### 第2步：安装gh-pages， 然后在package.json文件中增加deploy 到scripts 上。
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
+现在，当你运行`npm run build`，你将会看到一段关于如何部署到GitHub页面的提示。
 
-To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
+发布至[https://myusername.github.io/my-app](https://myusername.github.io/my-app) 运行：
 
 ```sh
 npm install --save-dev gh-pages
 ```
 
-Add the following script in your `package.json`:
+添加以下脚本到package.json中：
 
 ```js
   // ...
@@ -1080,78 +1074,79 @@ Add the following script in your `package.json`:
   }
 ```
 
-(Note: the lack of whitespace is intentional.)
+（注意：这里是故意省略空格的）
 
-#### Step 3: Deploy the site by running `npm run deploy`
+#### 第3步： 运行`npm run deploy`部署站点
 
-Then run:
+然后运行：
 
 ```sh
 npm run deploy
 ```
 
-#### Step 4: Ensure your project's settings use `gh-pages`
+#### 第4步：确保项目设置使用了gh-pages
 
-Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
+最后，确保GitHub项目设置中的**GitHub Pages**选项设置使用 `gh-pages`分支：
 
 <img src="http://i.imgur.com/HUjEr9l.png" width="500" alt="gh-pages branch setting">
 
-#### Step 5: Optionally, configure the domain
+#### 第5步：可选项，配置域名
 
-You can configure a custom domain with GitHub Pages by adding a `CNAME` file to the `public/` folder.
+你可以在GitHub 页面上增加一个CNAME 文件到public/ 文件夹下，来配置自定义的域名。
 
-#### Notes on client-side routing
+#### 客户端路由注意事项
 
-GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+GitHub 页面不支持使用HTML5 pushState history API实现的路由器（比如，React Router使用了browserHistory）。这是因为，当访问一个类似`http://user.github.io/todomvc/todos/42`的URL的时候，`/todos/42`是一个前端路由，GitHub Pages 服务器返回404，因为它对`/todos/42`一无所知。如果你想给GitHub Pages上的项目增加路由，这里有一些解决方法：
 
-* You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
-* Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+
+* 你可以将HTML5 History API 装换成hash值。如果你使用的是React Router，使用hashHistory可以完成，但是URL 会更长更啰嗦（例如：`http://user.github.io/todomvc/#/todos/42?_k=yknaj`）。关于React Router 的更多不同history实现，[阅读](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories)。
+
+* 另一种方式，你可以让GitHub Pages 使用专门的重定向参数将404处理指向index.html 。你需要在部署项目之前，在build目录下增加重定向代码的404.html 文件。并且，你要添加代码来处理指向到index.html 的重定向参数。你可以在[这份指南](https://github.com/rafrex/spa-github-pages)中找到这门技术更详细的介绍。
 
 ### Heroku
 
-Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
-You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
+使用[为Create React App准备的Heroku Buildpack ](https://github.com/mars/create-react-app-buildpack)。
+你可以在这里[零配置部署React](https://blog.heroku.com/deploying-react-with-zero-configuration)找到更多介绍。
 
 ### Modulus
 
-See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
+关于如何部署react应用到Modulus，参照[Modulus 博客](http://blog.modulus.io/deploying-react-apps-on-modulus)。
 
 ## Netlify
 
-**To do a manual deploy to Netlify's CDN:**
+**手动部署到 Netlify的CDN上：**
 
 ```sh
 npm install netlify-cli
 netlify deploy
 ```
 
-Choose `build` as the path to deploy.
+选择`build`作为部署路径。
 
-**To setup continuous delivery:**
+**设置持续交付：**
 
-With this setup Netlify will build and deploy when you push to git or open a pull request:
+这样设置之后，每次git push 或者pull 的时候Netlify会执行编译和部署。
 
-1. [Start a new netlify project](https://app.netlify.com/signup)
-2. Pick your Git hosting service and select your repository
-3. Click `Build your site`
+1. [开始一个新的netlify 项目](https://app.netlify.com/signup)
+2. 选择Git主机和仓库
+3. 点击 `Build your site`
 
-**Support for client-side routing:**
+**支持客户端路由：**
 
-To support `pushState`, make sure to create a `public/_redirects` file with the following rewrite rules:
-
+要支持pushState，请确保创建了包含如下重写规则的文件 `public/_redirects`：
 ```
 /*  /index.html  200
 ```
 
-When you build the project, Create React App will place the `public` folder contents into the build output.
+编译项目的时候，Create React App 会将public 文件夹的内容放置到build输出中去。
 
-### Now
+### 现在
 
-See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+请看[这个实例](https://github.com/xkawi/create-react-app-now) ，这是一个用[now](https://zeit.co/now)实现的零配置单命令的部署的例子。
 
 ### S3 and CloudFront
 
-See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af) on how to deploy your React app to Amazon Web Services [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/).
+关于如何部署react 应用到Amazon web服务商[S3](https://aws.amazon.com/s3) 和[CloudFront](https://aws.amazon.com/cloudfront/)，参见[blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af)。
 
 ### Surge
 
