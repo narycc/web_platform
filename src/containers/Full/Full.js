@@ -10,7 +10,7 @@ class Full extends Component {
 
   componentDidMount () {
     if(!this.props.userInfo || !this.props.userInfo.name){
-      this.props.startup();
+      //this.props.startup();
     }
   }
 

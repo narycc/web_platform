@@ -32,9 +32,9 @@ const Todo = ({
   let statusFormCheckData =state.get('statusFormCheckData');
   let rangeData = state.get('rangeData');
 
-  let todoList = todos.get('todos');
-  let selectFilter = todos.get('visibilityFilter');
-  let inputValue = todos.get('inputValue');
+  let todoList = todos.get('todos') || [];
+  let selectFilter = todos.get('visibilityFilter')|| '';
+  let inputValue = todos.get('inputValue')|| '';
 
   let data = original.data || {};
   initData['rows'] = (data.list && data.list.map(item => {
@@ -60,10 +60,10 @@ const Todo = ({
     initData.empty.message = '已上线理财计划列表为空，参数：' + JSON.stringify(original.param);
   }
 
-  let tableTips = '';
+  /*let tableTips = '';
   if (data && data.total >= 0) {
     tableTips = '总计 ' + data.total + ' 条数据，共 ' + data.totalPage + ' 页';
-  }
+  }*/
 
 
   let tableTips = '我是tabletips ,你可以在这这里展示一些关于表的说明';
@@ -84,7 +84,7 @@ const Todo = ({
               {/*<!-- 过滤条件 1 -->*/}
               <div className="col-sm-12 col-md-7">
                 <TypeSearch
-                  initData={state.toJS()}
+                  initData={state.get('typeSearch').toJS()}
                   onSearch={onSearch}
                   onChange={onTypeSearchChange}
                   onMenuClick={onMenuClick}

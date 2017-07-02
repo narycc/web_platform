@@ -14,7 +14,14 @@ import {
   setVisibilityFilter, 
   addTodoInput, 
   toggleTodo, 
-  deleteTodo } from '../../reducers/todoReducer';
+  deleteTodo,
+  datePickerFocusChange,
+  datePickerChange,
+  todosSearchRequest,
+  todoSearchTypeChange,
+  todosSearchMenuClick,
+  todosSearchMenuToggle
+} from '../../reducers/todoReducer';
 
 
 class CTodos extends Component {
@@ -38,6 +45,12 @@ export default connect(
     addTodo: addTodo,
     onInput: addTodoInput,
     toggleTodo: toggleTodo,
-    deleteTodo: deleteTodo
+    deleteTodo: deleteTodo,
+    onFocusChange:datePickerFocusChange,
+    onDatesChange:datePickerChange,
+    onSearch: todosSearchRequest,
+    onTypeSearchChange:todoSearchTypeChange,
+    onMenuClick:todosSearchMenuClick,
+    onMenuToggleClick:todosSearchMenuToggle
   },dispatch)
 )(CTodos);

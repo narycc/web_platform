@@ -19,16 +19,42 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
 
+// 时间选择器
+export const DATE_PICKER_FOCUS_CHANGE = 'DATE_PICKER_FOCUS_CHANGE';
+export const DATE_PICKER_CHANGE = 'DATE_PICKER_CHANGE';
+export const TODOS_SEARCH_REQUEST = 'TODOS_SEARCH_REQUEST';
+export const TODOS_SEARCH_SUCCESS = 'TODOS_SEARCH_SUCCESS';
+export const TODOS_SEARCH_ERROR = 'TODOS_SEARCH_ERROR';
+export const TODO_SEARCH_TYPE_CHANGE = 'TODO_SEARCH_TYPE_CHANGE';
+
+export const TODOS_SEARCH_MENU_CLICK = 'TODOS_SEARCH_MENU_CLICK';
+export const TODOS_SEARCH_MENU_TOGGLE = 'TODOS_SEARCH_MENU_TOGGLE';
+/*
+* actions
+*/
 export const addTodo = createAction(ADD_TODO);
 export const toggleTodo = createAction(TOGGLE_TODO);
 export const setVisibilityFilter = createAction(SET_VISIBILITY_FILTER);
 export const addTodoInput = createAction(ADD_TODO_INPUT);
 export const deleteTodo = createAction(DELETE_TODO);
 
+// 时间选择器
+export const datePickerFocusChange = createAction(DATE_PICKER_FOCUS_CHANGE);
+export const datePickerChange = createAction(DATE_PICKER_CHANGE);
+export const todosSearchRequest = createAction(TODOS_SEARCH_REQUEST);
+export const todosSearchSuccess = createAction(TODOS_SEARCH_SUCCESS);
+export const todosSearchError = createAction(TODOS_SEARCH_ERROR);
+export const todoSearchTypeChange = createAction(TODO_SEARCH_TYPE_CHANGE);
+export const todosSearchMenuClick = createAction(TODOS_SEARCH_MENU_CLICK);
+export const todosSearchMenuToggle = createAction(TODOS_SEARCH_MENU_TOGGLE);
+
 export const TodoState = Immutable.fromJS({
-  todos: [],
-  visibilityFilter: VisibilityFilters.SHOW_ALL,
-  inputValue: '',
+  todos : {
+    todos: [],
+    visibilityFilter: VisibilityFilters.SHOW_ALL,
+    inputValue: '',
+  },
+
 
   // 类型变化输入框
   typeSearch:{
